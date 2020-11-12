@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<canvas id="myCanvas" width="480" height="320"></canvas>
+<canvas id="myCanvas" width="854" height="480"></canvas>
 
 <script type="text/javascript">
     // JavaScript code goes here
@@ -17,25 +17,25 @@
 
     var ballRadius = 10;
     var x = canvas.width / 2;
-    var y = canvas.height - 30;
+    var y = canvas.height - 60;
 
     var dx = 2;
     var dy = -2;
 
-    var paddleHeight = 10;
-    var paddleWidth = 75;
+    var paddleHeight = 13;
+    var paddleWidth = 80;
     var paddleX = (canvas.width - paddleWidth) / 2;
 
     var rightPressed = false;
     var leftPressed = false;
 
-    var brickRowCount = 3;
-    var brickColumnCount = 5;
+    var brickRowCount = 8;
+    var brickColumnCount = 9;
     var brickWidth = 75;
     var brickHeight = 20;
     var brickPadding = 10;
     var brickOffsetTop = 30;
-    var brickOffsetLeft = 30;
+    var brickOffsetLeft = 50;
 
     var score = 0;
 
@@ -82,9 +82,13 @@
                 var b = bricks[c][r];
                 if(b.status == 1) {
                     if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
-                        dy = -dy;
+                        dy = -(dy+speed);
                         b.status = 0;
                         score++;
+                        speed = speed+0.1;
+
+                        dx=dx+speed;
+                        dy=dy+speed;
 
                         if(score == brickRowCount*brickColumnCount) {
                             alert("YOU WIN, CONGRATULATIONS!");
@@ -165,19 +169,20 @@
         collisionDetection();
 
         if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-            dx = -dx;
+            dx = -(dx+speed);
         }
         if (y + dy < ballRadius) {
-            dy = -dy;
+            dy = -(dy+speed);
         }
         else if (y + dy > canvas.height - ballRadius) {
             if (x > paddleX && x < paddleX + paddleWidth) {
                 if (y = y - paddleHeight) {
-                    dy = -dy;
+                    dy = -(dy+speed);
                 }
             }
             else {
                 lives--;
+                speed=0;
                 if(!lives) {
                     alert("GAME OVER");
                     document.location.reload();
