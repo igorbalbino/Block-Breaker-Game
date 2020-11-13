@@ -19,8 +19,8 @@
     var x = canvas.width / 2;
     var y = canvas.height - 60;
 
-    var dx = 2;
-    var dy = -2;
+    var dx = 4;
+    var dy = -4;
 
     var paddleHeight = 13;
     var paddleWidth = 80;
@@ -40,8 +40,6 @@
     var score = 0;
 
     var lives = 3;
-
-    var speed = 0;
 
     var bricks = [];
     for (var c = 0; c < brickColumnCount; c++) {
@@ -82,13 +80,9 @@
                 var b = bricks[c][r];
                 if(b.status == 1) {
                     if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
-                        dy = -(dy+speed);
+                        dy = -dy;
                         b.status = 0;
                         score++;
-                        speed = speed+0.1;
-
-                        dx=dx+speed;
-                        dy=dy+speed;
 
                         if(score == brickRowCount*brickColumnCount) {
                             alert("YOU WIN, CONGRATULATIONS!");
@@ -169,20 +163,19 @@
         collisionDetection();
 
         if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-            dx = -(dx+speed);
+            dx = -dx;
         }
         if (y + dy < ballRadius) {
-            dy = -(dy+speed);
+            dy = -dy;
         }
         else if (y + dy > canvas.height - ballRadius) {
             if (x > paddleX && x < paddleX + paddleWidth) {
                 if (y = y - paddleHeight) {
-                    dy = -(dy+speed);
+                    dy = -dy;
                 }
             }
             else {
                 lives--;
-                speed=0;
                 if(!lives) {
                     alert("GAME OVER");
                     document.location.reload();
@@ -190,8 +183,8 @@
                 else {
                     x = canvas.width/2;
                     y = canvas.height-30;
-                    dx = 2;
-                    dy = -2;
+                    dx = 4;
+                    dy = -4;
                     paddleX = (canvas.width-paddleWidth)/2;
                 }
             }
