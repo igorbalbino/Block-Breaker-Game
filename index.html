@@ -16,11 +16,16 @@
     var ctx = canvas.getContext("2d");
 
     var ballRadius = 10;
+    var miniBallRadius = 4;
     var x = canvas.width / 2;
     var y = canvas.height - 60;
 
-    var dx = 4;
-    var dy = -4;
+
+    var eX;
+    var eY;
+
+    var dx = 5;
+    var dy = -5;
 
     var paddleHeight = 13;
     var paddleWidth = 80;
@@ -84,6 +89,9 @@
                         b.status = 0;
                         score++;
 
+                        eX=b.x;
+                        eY=b.y;
+
                         if(score == brickRowCount*brickColumnCount) {
                             alert("YOU WIN, CONGRATULATIONS!");
                             document.location.reload();
@@ -93,6 +101,7 @@
                 }
             }
         }
+        return 1;
     }
     
     //faz o desenho da bola
@@ -131,6 +140,90 @@
             }
         }
     }
+
+    //testes **********************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //faz o desenho da mini bola
+    function drawMiniBall() {
+        ctx.beginPath();
+        ctx.arc(eX, eY, miniBallRadius, 0, Math.PI * 2);
+        ctx.fillStyle = "#000000";
+        ctx.fill();
+        ctx.closePath();
+    }
+    
+    function kabumCima() {
+        drawMiniBall();
+
+        
+        for(var i=0;i>=canvas.height;i++){
+            eY += dy;
+        }
+
+        requestAnimationFrame(kabumCima);
+    }
+    function kabumBaixo() {
+        drawMiniBall();
+
+        
+        for(var i=0;i<-(canvas.height);i++){
+            eY += dy;
+        }
+
+        requestAnimationFrame(kabumBaixo);
+    }
+    function kabumDireita() {
+        drawMiniBall();
+
+        
+        eX += dx;
+
+        requestAnimationFrame(kabumDireita);
+    }
+    function kabumEsquerda() {
+        drawMiniBall();
+
+        
+        eX -= dx;
+
+        requestAnimationFrame(kabumEsquerda);
+    }
+
+    function kabum(){
+        if(collisionDetection()==1) {
+            kabumCima();
+            kabumBaixo();
+            kabumDireita();
+            kabumEsquerda();
+        }
+        requestAnimationFrame(kabum);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //testes **********************************************************
 
     //conta o score da partida
     function drawScore() {
