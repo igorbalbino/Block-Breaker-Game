@@ -1,2 +1,6 @@
 # Block Breaker Game
- Jogo Block Breaker em sua forma básica. Apenas a bola, a plataforma e os bloos.
+
+### Descrição
+
+Game BlockBreaker feito em JavaScript com Canvas.
+Ainda sem efeito de partículas estará presente em versões futuras...
